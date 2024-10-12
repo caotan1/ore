@@ -75,8 +75,8 @@ chmod +x $TARGET_DIR/ore-miner
 
 #创建start_ore文件
 touch $TARGET_DIR/$START_FILE
-# 提示用户输入 custom_name
-read -p "Enter custom_name : " THREADS
+# 提示用户输入 THREADS
+read -p "Enter THREADS : " THREADS
 echo 'nohup ./ore-miner  mine --address Cfj5SuyUUd9sUxnwgU3R8De4rYRpdTAkV7w2UzFEXEBf --threads THREADS --invcode 2QKLTH >>ore.log 2>&1 &' > $TARGET_DIR/$START_FILE 
 
 
