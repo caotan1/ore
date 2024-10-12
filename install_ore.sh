@@ -1,7 +1,7 @@
 #!/bin/bash
 
 # 定义你的输入参数
-URL="https://ghproxy.net/https://github.com/caotan1/ore/blob/main/ore-miner"
+URL="https://ghproxy.net/https://github.com/caotan1/ore/raw/main/ore-miner"
 TARGET_DIR="/home/ubuntu/ore"
 LOCAL_ARCHIVE="ore-miner"
 REQUIRED_TOOLS=("curl" "wget")
