@@ -79,12 +79,11 @@ touch $TARGET_DIR/$START_FILE
 read -p "Enter THREADS : " THREADS
 echo 'nohup ./ore-miner  mine --address Cfj5SuyUUd9sUxnwgU3R8De4rYRpdTAkV7w2UzFEXEBf --threads THREADS --invcode 2QKLTH >>ore.log 2>&1 &' > $TARGET_DIR/$START_FILE 
 
-
 TEMPLATE_FILE="$TARGET_DIR/$START_FILE"
 # 读取模板文件内容
 TEMPLATE_CONTENT=$(<"$TEMPLATE_FILE")
 
-# 替换模板中的 CUSTOM_NAME 变量
+# 替换模板中的 THREADSE 变量
 MODIFIED_CONTENT=$(echo "$TEMPLATE_CONTENT" | sed "s/THREADS/$THREADS/g")
 
 # 创建新的脚本文件并写入修改后的内容
