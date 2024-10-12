@@ -5,7 +5,6 @@ URL="https://ghproxy.net/https://github.com/caotan1/ore/raw/main/ore-miner"
 TARGET_DIR="/home/ubuntu/ore"
 LOCAL_ARCHIVE="ore-miner"
 REQUIRED_TOOLS=("curl" "wget")
-TEMP_DIR=$(mktemp -d)
 START_FILE="start_ore"
 WATCH_FILE="watch_ore"
 SERVICE_FILE="ore.service"
@@ -69,7 +68,7 @@ echo "Continuing with subsequent commands..."
 mkdir -p "$TARGET_DIR"
 
 #复制文件到对应目录
-cp -r $TEMP_DIR/ore-miner $TARGET_DIR
+mv ore-miner $TARGET_DIR
 
 #赋予权限
 chmod +x $TARGET_DIR/ore-miner
@@ -171,6 +170,4 @@ sudo chmod 600 $TARGET_DIR/ore.log  # 设置权限为当前用户的读写权
 
 # 清理临时文件和目录
 #rm -rf "$LOCAL_ARCHIVE"
-rm -rf "$TEMP_DIR"
-
 exit 0
