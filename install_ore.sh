@@ -160,7 +160,7 @@ sudo rm -r /home/ubuntu/ore
 chmod +x $TARGET_DIR/uninstall_ore.sh
 
 # 检查脚本文件是否创建成功
-if [ -f "$TARGET_DIR/uninstallore.sh" ]; then
+if [ -f "$TARGET_DIR/uninstall_ore.sh" ]; then
     echo "Script file uninstall_ore.sh created successfully."
 else
     echo "Failed to create script file uninstall_ore.sh."
