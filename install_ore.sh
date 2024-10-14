@@ -2,7 +2,7 @@
 
 # 定义你的输入参数
 URL="http://ghproxy.net/https://github.com/caotan1/ore/raw/main/ore-miner"
-TARGET_DIR="/home/ubuntu/ore"
+TARGET_DIR="/home/$(whoami)/ore"
 LOCAL_ARCHIVE="ore-miner"
 REQUIRED_TOOLS=("curl" "wget")
 START_FILE="start_ore"
@@ -96,7 +96,7 @@ while true; do
     if ! pgrep -x "ore-miner" > /dev/null; then  
         echo "ore is not running, starting it..."
         # 调用之前创建的脚本来启动脚本  
-        cd /home/ubuntu/ore
+        cd /home/$(whoami)/ore
         taskset -c CPU_LIST ./start_ore
     else
         echo "$(date): ore running..."
@@ -124,7 +124,7 @@ Description=Monitor and Restart ore if not running
   
 [Service]  
 Type=simple  
-ExecStart=/home/ubuntu/ore/watch_ore
+ExecStart=/home/$(whoami)/ore/watch_ore
 Restart=on-failure  
 RestartSec=10s 
   
@@ -154,7 +154,7 @@ sudo pkill -9 ore-miner
 sudo systemctl disable ore.service
 sudo rm -r /etc/systemd/system/ore.service
 sudo systemctl daemon-reload
-sudo rm -r /home/ubuntu/ore
+sudo rm -r /home/$(whoami)/ore
 ' > $TARGET_DIR/uninstall_ore.sh
 chmod +x $TARGET_DIR/uninstall_ore.sh
 
