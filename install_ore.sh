@@ -1,13 +1,4 @@
-#!/bin/bash
-
-# 定义你的输入参数
-URL="http://ghproxy.net/https://github.com/caotan1/ore/raw/main/ore-miner"
-TARGET_DIR="/home/$(whoami)/ore"
-LOCAL_ARCHIVE="ore-miner"
-REQUIRED_TOOLS=("curl" "wget")
-START_FILE="start_ore"
-WATCH_FILE="watch_ore"
-SERVICE_FILE="ore.service"
+c
 
 
 # 检查所需工具是否安装，如果没有安装，则进行安装
@@ -132,23 +123,15 @@ RestartSec=10s
 WantedBy=multi-user.target
 ' > $TARGET_DIR/$SERVICE_FILE
 
-EMPLATE_FILE="$TARGET_DIR/$SERVICE_FILE"
+TEMPLATE_FILE="$TARGET_DIR/$SERVICE_FILE"
 # 读取模板文件内容
 TEMPLATE_CONTENT=$(<"$TEMPLATE_FILE")
 
-# 替换模板中的 WHO 变量
-MODIFIED_CONTENT=$(echo "$TEMPLATE_CONTENT" | sed "s/WHO/$(whoami)/g")
+# 替换模板中的 CPU_NUM 变量
+MODIFIED_CONTENT=$(echo "$TEMPLATE_CONTENT" | sed "s/WHO/$WHO/g")
+
 # 创建新的脚本文件并写入修改后的内容
 echo -e "$MODIFIED_CONTENT" > $TARGET_DIR/$SERVICE_FILE
-
-chmod +x $TARGET_DIR/$SERVICE_FILE
-# 检查脚本文件是否创建成功
-if [ -f "$TARGET_DIR/$SERVICE_FILE" ]; then
-    echo "Script file $SERVICE_FILE created successfully."
-else
-    echo "Script file $SERVICE_FILE created Failed."
-    exit 1
-fi
 
 sudo mv $TARGET_DIR/$SERVICE_FILE /etc/systemd/system/
 
