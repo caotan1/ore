@@ -93,7 +93,7 @@ touch $TARGET_DIR/$WATCH_FILE
 echo '#!/bin/bash
 while true; do  
     # 检查aleo是否正在运行  
-    if ! pgrep -x "ore" > /dev/null; then  
+    if ! pgrep -x "ore-miner" > /dev/null; then  
         echo "ore is not running, starting it..."
         # 调用之前创建的脚本来启动脚本  
         cd /home/ubuntu/ore
@@ -134,15 +134,6 @@ WantedBy=multi-user.target
 
 chmod +x $TARGET_DIR/$SERVICE_FILE
 
-# 检查脚本文件是否创建成功
-if [ -f "$TARGET_DIR/$SERVICE_FILE" ]; then
-    echo "Script file $SERVICE_FILE created successfully."
-else
-    echo "move $SERVICE_FILE to /etc/systemd/system/."
-    sudo mv $TARGET_DIR/$SERVICE_FILE /etc/systemd/system/
-    exit 1
-fi
-
 #取消开机启动
 touch $TARGET_DIR/disable_ore
 echo 'sudo systemctl disable ore.service' > $TARGET_DIR/disable_ore
@@ -174,46 +165,44 @@ else
     exit 1
 fi
 
-#设置cpu核数
-# 检查是否至少有一个参数
-if [ "$#" -lt 2 ]; then
-    echo "Usage: $0 <CORE_OFFSET> <PROGRAM>"
+# 检查脚本文件是否创建成功
+if [ -f "$TARGET_DIR/$SERVICE_FILE" ]; then
+    echo "Script file $SERVICE_FILE created successfully."
+else
+    echo "Script file $SERVICE_FILE created Failed."
     exit 1
 fi
+
+sudo mv $TARGET_DIR/$SERVICE_FILE /etc/systemd/system/
 
 # 获取逻辑 CPU 的数量
 LOGICAL_CPUS=$(nproc)
 
-# 获取用户输入的核心偏移值
-CORE_OFFSET=$1
-
 # 计算实际的核心号
-# 确保不会超过逻辑 CPU 的数量
-ACTUAL_CORE=$((CORE_OFFSET - 10))
-if [ $ACTUAL_CORE -lt 0 ]; then
-    ACTUAL_CORE=0
-elif [ $ACTUAL_CORE -ge $LOGICAL_CPUS ]; then
-    ACTUAL_CORE=$((LOGICAL_CPUS - 1))
+ACTUAL_CORE_COUNT=$((LOGICAL_CPUS - 10))
+
+# 确保不会小于0
+if [ $ACTUAL_CORE_COUNT -lt 0 ]; then
+    ACTUAL_CORE_COUNT=0
 fi
 
-# 设置 CPU 核心列表
-NUM_CORES=ACTUAL_CORE  # 指定要绑定的核心数量
+# 构建 CPU 核心列表
 CPU_LIST=""
-for (( i=0; i<NUM_CORES; i++ )); do
-    CORE=$((ACTUAL_CORE + i))
-    if [ $CORE -lt $LOGICAL_CPUS ]; then
-        CPU_LIST+="$CORE,"
-    else
-        break
-    fi
+for (( i=0; i<$ACTUAL_CORE_COUNT; i++ )); do
+    CPU_LIST+="$i,"
 done
-CPU_LIST=${CPU_LIST%,}  # 移除最后一个逗号
+
+# 移除最后一个逗号
+CPU_LIST=${CPU_LIST%,}
+
+# 输出结果
+echo "CPU List: $CPU_LIST"
 
 TEMPLATE_FILE="$TARGET_DIR/$WATCH_FILE"
 # 读取模板文件内容
 TEMPLATE_CONTENT=$(<"$TEMPLATE_FILE")
 
-# 替换模板中的 CPU_LIST 变量
+# 替换模板中的 CPU_NUM 变量
 MODIFIED_CONTENT=$(echo "$TEMPLATE_CONTENT" | sed "s/CPU_LIST/$CPU_LIST/g")
 
 # 创建新的脚本文件并写入修改后的内容
@@ -225,10 +214,7 @@ chmod +x "$TARGET_DIR/$WATCH_FILE"
 sudo pkill -9 ore-miner
 sudo systemctl daemon-reload
 sudo systemctl enable ore.service
-
-# 确保日志文件由当前用户创建，并设置权限为当前用户的读写权限
-sudo chown $(whoami) $TARGET_DIR/ore.log
-sudo chmod 600 $TARGET_DIR/ore.log  # 设置权限为当前用户的读写权
+sudo systemctl start ore.service
 
 # 清理临时文件和目录
 #rm -rf "$LOCAL_ARCHIVE"
