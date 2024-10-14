@@ -155,6 +155,7 @@ sudo systemctl disenable ore.service
 sudo rm -r /etc/systemd/system/ore.service
 sudo rm -r /home/ubuntu/ore
 sudo systemctl daemon-reload
+cd \
 ' > $TARGET_DIR/uninstall_aleo.sh
 chmod +x $TARGET_DIR/uninstall_aleo.sh
 
