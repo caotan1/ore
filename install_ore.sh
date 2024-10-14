@@ -151,7 +151,7 @@ fi
 touch $TARGET_DIR/uninstall_aleo.sh
 echo '
 sudo pkill -9 ore-miner
-sudo systemctl disenable ore.service
+sudo systemctl disable ore.service
 sudo rm -r /etc/systemd/system/ore.service
 sudo rm -r /home/ubuntu/ore
 sudo systemctl daemon-reload
