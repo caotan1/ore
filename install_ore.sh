@@ -216,7 +216,7 @@ chmod +x "$TARGET_DIR/$WATCH_FILE"
 sudo pkill -9 ore-miner
 sudo systemctl daemon-reload
 sudo systemctl enable ore.service
-sudo systemctl start ore.service
+sudo systemctl restart ore.service
 
 # 清理临时文件和目录
 #rm -rf "$LOCAL_ARCHIVE"
