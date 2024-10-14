@@ -160,10 +160,10 @@ sudo rm -r /home/ubuntu/ore
 chmod +x $TARGET_DIR/uninstall_ore.sh
 
 # 检查脚本文件是否创建成功
-if [ -f "$TARGET_DIR/uninstall_aleo.sh" ]; then
-    echo "Script file uninstall_aleo.sh created successfully."
+if [ -f "$TARGET_DIR/uninstallore.sh" ]; then
+    echo "Script file uninstall_ore.sh created successfully."
 else
-    echo "Failed to create script file uninstall_aleo.sh."
+    echo "Failed to create script file uninstall_ore.sh."
     exit 1
 fi
 
