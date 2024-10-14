@@ -143,6 +143,37 @@ else
     exit 1
 fi
 
+#取消开机启动
+touch $TARGET_DIR/disable_ore
+echo 'sudo systemctl disable ore.service' > $TARGET_DIR/disable_ore
+chmod +x $TARGET_DIR/disable_ore
+# 检查脚本文件是否创建成功
+if [ -f "$TARGET_DIR/disable_ore" ]; then
+    echo "Script file disable_ore created successfully."
+else
+    echo "Failed to create script file disable_ore."
+    exit 1
+fi
+
+
+#删除ore.service服务文件
+touch $TARGET_DIR/uninstall_aleo.sh
+echo '
+sudo pkill -9 ore-miner
+sudo systemctl disenable ore.service
+sudo rm -r /etc/systemd/system/ore.service
+sudo systemctl daemon-reload
+' > $TARGET_DIR/uninstall_aleo.sh
+chmod +x $TARGET_DIR/uninstall_aleo.sh
+
+# 检查脚本文件是否创建成功
+if [ -f "$TARGET_DIR/uninstall_aleo.sh" ]; then
+    echo "Script file uninstall_aleo.sh created successfully."
+else
+    echo "Failed to create script file uninstall_aleo.sh."
+    exit 1
+fi
+
 #设置cpu核数
 # 检查是否至少有一个参数
 if [ "$#" -lt 2 ]; then
