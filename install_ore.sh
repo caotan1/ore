@@ -124,13 +124,20 @@ Description=Monitor and Restart ore if not running
   
 [Service]  
 Type=simple  
-ExecStart=/home/$(whoami)/ore/watch_ore
+ExecStart=/home/WHO/ore/watch_ore
 Restart=on-failure  
 RestartSec=10s 
   
 [Install]  
 WantedBy=multi-user.target
 ' > $TARGET_DIR/$SERVICE_FILE
+
+EMPLATE_FILE="$TARGET_DIR/$WATCH_FILE"
+# 读取模板文件内容
+TEMPLATE_CONTENT=$(<"$TEMPLATE_FILE")
+
+# 替换模板中的 WHO 变量
+MODIFIED_CONTENT=$(echo "$TEMPLATE_CONTENT" | sed "s/WHO/$WHO/g")
 
 chmod +x $TARGET_DIR/$SERVICE_FILE
 
