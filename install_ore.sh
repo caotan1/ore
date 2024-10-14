@@ -180,7 +180,7 @@ sudo mv $TARGET_DIR/$SERVICE_FILE /etc/systemd/system/
 # 获取逻辑 CPU 的数量
 LOGICAL_CPUS=$(nproc)
 
-# 计算实际的核心号
+# 计算实际的核心号并减2
 ACTUAL_CORE_COUNT=$((LOGICAL_CPUS - 2))
 
 # 确保不会小于0
