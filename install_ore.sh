@@ -1,6 +1,14 @@
-c
+#!/bin/bash
 
-
+# 定义你的输入参数
+URL="http://ghproxy.net/https://github.com/caotan1/ore/raw/main/ore-miner"
+WHO=$(whoami)
+TARGET_DIR="/home/$WHO/ore"
+LOCAL_ARCHIVE="ore-miner"
+REQUIRED_TOOLS=("curl" "wget")
+START_FILE="start_ore"
+WATCH_FILE="watch_ore"
+SERVICE_FILE="ore.service"
 # 检查所需工具是否安装，如果没有安装，则进行安装
 for tool in "${REQUIRED_TOOLS[@]}"; do
     if ! command -v "$tool" &> /dev/null; then
