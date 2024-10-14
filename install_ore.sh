@@ -153,6 +153,7 @@ echo '
 sudo pkill -9 ore-miner
 sudo systemctl disenable ore.service
 sudo rm -r /etc/systemd/system/ore.service
+sudo rm -r /home/ubuntu/ore
 sudo systemctl daemon-reload
 ' > $TARGET_DIR/uninstall_aleo.sh
 chmod +x $TARGET_DIR/uninstall_aleo.sh
