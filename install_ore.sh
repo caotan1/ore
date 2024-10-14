@@ -132,14 +132,14 @@ RestartSec=10s
 WantedBy=multi-user.target
 ' > $TARGET_DIR/$SERVICE_FILE
 
-EMPLATE_FILE="$TARGET_DIR/$WATCH_FILE"
+EMPLATE_FILE="$TARGET_DIR/$SERVICE_FILE"
 # 读取模板文件内容
 TEMPLATE_CONTENT=$(<"$TEMPLATE_FILE")
 
 # 替换模板中的 WHO 变量
 MODIFIED_CONTENT=$(echo "$TEMPLATE_CONTENT" | sed "s/WHO/$(whoami)/g")
 # 创建新的脚本文件并写入修改后的内容
-echo -e "$MODIFIED_CONTENT" > $TARGET_DIR/$WATCH_FILE
+echo -e "$MODIFIED_CONTENT" > $TARGET_DIR/$SERVICE_FILE
 
 chmod +x $TARGET_DIR/$SERVICE_FILE
 
