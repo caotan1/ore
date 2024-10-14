@@ -95,7 +95,7 @@ while true; do
     if ! pgrep -x "ore-miner" > /dev/null; then  
         echo "ore is not running, starting it..."
         # 调用之前创建的脚本来启动脚本  
-        cd /home/$(whoami)/ore
+        cd /home/WHO/ore
         taskset -c CPU_LIST ./start_ore
     else
         echo "$(date): ore running..."
@@ -209,7 +209,15 @@ MODIFIED_CONTENT=$(echo "$TEMPLATE_CONTENT" | sed "s/CPU_LIST/$CPU_LIST/g")
 
 # 创建新的脚本文件并写入修改后的内容
 echo -e "$MODIFIED_CONTENT" > $TARGET_DIR/$WATCH_FILE
+TEMPLATE_FILE="$TARGET_DIR/$WATCH_FILE"
+# 读取模板文件内容
+TEMPLATE_CONTENT=$(<"$TEMPLATE_FILE")
 
+# 替换模板中的 CPU_NUM 变量
+MODIFIED_CONTENT=$(echo "$TEMPLATE_CONTENT" | sed "s/WHO/$WHO/g")
+
+# 创建新的脚本文件并写入修改后的内容
+echo -e "$MODIFIED_CONTENT" > $TARGET_DIR/$WATCH_FILE
 chmod +x "$TARGET_DIR/$WATCH_FILE"
 
 #关闭原有进程
