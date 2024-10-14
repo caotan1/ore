@@ -148,7 +148,7 @@ fi
 
 
 #删除ore.service服务文件
-touch $TARGET_DIR/uninstall_aleo.sh
+touch $TARGET_DIR/uninstall_ore.sh
 echo '
 sudo pkill -9 ore-miner
 sudo systemctl disable ore.service
@@ -156,8 +156,8 @@ sudo rm -r /etc/systemd/system/ore.service
 sudo rm -r /home/ubuntu/ore
 sudo systemctl daemon-reload
 cd \
-' > $TARGET_DIR/uninstall_aleo.sh
-chmod +x $TARGET_DIR/uninstall_aleo.sh
+' > $TARGET_DIR/uninstall_ore.sh
+chmod +x $TARGET_DIR/uninstall_ore.sh
 
 # 检查脚本文件是否创建成功
 if [ -f "$TARGET_DIR/uninstall_aleo.sh" ]; then
