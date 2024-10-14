@@ -181,7 +181,7 @@ sudo mv $TARGET_DIR/$SERVICE_FILE /etc/systemd/system/
 LOGICAL_CPUS=$(nproc)
 
 # 计算实际的核心号
-ACTUAL_CORE_COUNT=$((LOGICAL_CPUS - 10))
+ACTUAL_CORE_COUNT=$((LOGICAL_CPUS - 2))
 
 # 确保不会小于0
 if [ $ACTUAL_CORE_COUNT -lt 0 ]; then
