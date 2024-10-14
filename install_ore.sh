@@ -221,6 +221,7 @@ echo -e "$MODIFIED_CONTENT" > $TARGET_DIR/$WATCH_FILE
 chmod +x "$TARGET_DIR/$WATCH_FILE"
 
 #关闭原有进程
+sudo systemctl stop ore.service
 sudo pkill -9 ore-miner
 sudo systemctl daemon-reload
 sudo systemctl enable ore.service
