@@ -153,9 +153,9 @@ echo '
 sudo pkill -9 ore-miner
 sudo systemctl disable ore.service
 sudo rm -r /etc/systemd/system/ore.service
-sudo rm -r /home/ubuntu/ore
 sudo systemctl daemon-reload
 cd \
+sudo rm -r /home/ubuntu/ore
 ' > $TARGET_DIR/uninstall_ore.sh
 chmod +x $TARGET_DIR/uninstall_ore.sh
 
