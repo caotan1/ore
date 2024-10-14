@@ -142,6 +142,15 @@ MODIFIED_CONTENT=$(echo "$TEMPLATE_CONTENT" | sed "s/WHO/$(whoami)/g")
 echo -e "$MODIFIED_CONTENT" > $TARGET_DIR/$SERVICE_FILE
 
 chmod +x $TARGET_DIR/$SERVICE_FILE
+# 检查脚本文件是否创建成功
+if [ -f "$TARGET_DIR/$SERVICE_FILE" ]; then
+    echo "Script file $SERVICE_FILE created successfully."
+else
+    echo "Script file $SERVICE_FILE created Failed."
+    exit 1
+fi
+
+sudo mv $TARGET_DIR/$SERVICE_FILE /etc/systemd/system/
 
 #取消开机启动
 touch $TARGET_DIR/disable_ore
@@ -175,15 +184,7 @@ else
     exit 1
 fi
 
-# 检查脚本文件是否创建成功
-if [ -f "$TARGET_DIR/$SERVICE_FILE" ]; then
-    echo "Script file $SERVICE_FILE created successfully."
-else
-    echo "Script file $SERVICE_FILE created Failed."
-    exit 1
-fi
 
-sudo mv $TARGET_DIR/$SERVICE_FILE /etc/systemd/system/
 
 # 获取逻辑 CPU 的数量
 LOGICAL_CPUS=$(nproc)
